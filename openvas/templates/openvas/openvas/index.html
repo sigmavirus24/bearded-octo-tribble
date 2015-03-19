@@ -1,0 +1,22 @@
+{% extends 'openvas/base.html' %}
+{% load i18n %}
+{% block title %}OpenVAS Reports{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title="Reports" %}
+{% endblock page_header %}
+
+{% block main %}
+<div class="row-fluid">
+    <div class="span12">
+        <h1>OpenVAS Reports</h1>
+        <p class="lead">
+        These reports are the result of OpenVAS tasks being run. The task UUID 
+        is reported in the first column and all reports are grouped by task.
+        </p>
+    </div>
+
+    {{ table.render }}
+
+</div>
+{% endblock %}
