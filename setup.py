@@ -35,7 +35,7 @@ setuptools.setup(
     long_description=README,
     license='Apache2',
     packages=['openvas',
-              'openvas.openvas'],
+              'openvas.openvas_reports'],
     package_data={'rackspace': ['static/rackspace/img/*',
                                 'static/rackspace/css/*',
                                 'static/rackspace/scss/*',

@@ -19,7 +19,7 @@ from django.views.generic.base import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from horizon.tables import DataTableView
 
-from openvas.openvas import tables
+from openvas.openvas_reports import tables
 from openvas import omp
 
 

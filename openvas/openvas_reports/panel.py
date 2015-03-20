@@ -5,7 +5,7 @@ from openvas import dashboard
 
 class OpenVasPanel(horizon.Panel):
     name = 'Reports'
-    slug = 'openvas-reports'
+    slug = 'openvas_reports'
 
 
 dashboard.OpenVasDashboard.register(OpenVasPanel)
