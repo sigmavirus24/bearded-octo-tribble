@@ -16,7 +16,7 @@ import horizon
 
 
 class OpenVasPanelGroup(horizon.PanelGroup):
-    slug = 'openvas'
+    slug = 'openvas-reports'
     name = 'OpenVAS Reports'
     panels = ('openvas_reports',)
 
