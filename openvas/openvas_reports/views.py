@@ -38,7 +38,8 @@ class TextReportView(TemplateView):
         report_id = kwargs['report_id']
         txt_uuid = omp.get_report_format('txt')
         output = omp.omp(['-R', report_id, '-f', txt_uuid]).stdout.read()
-        context['report_data'] = output
+        context['report_content'] = output
+        context['report_id'] = report_id
         return context
 
 
