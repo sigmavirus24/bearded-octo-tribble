@@ -8,6 +8,9 @@ _Report = collections.namedtuple('Report',
                                  ['uuid', 'status', 'high', 'med', 'low',
                                   'log', 'date'])
 _Task = collections.namedtuple('Task', ['uuid', 'status', 'type'])
+_ReportRow = collections.namedtuple('ReportRow', ['task_uuid', 'report_uuid',
+                                                  'report_status', 'high',
+                                                  'med', 'low', 'log', 'date'])
 
 
 class _Parser(object):
@@ -25,6 +28,12 @@ class Task(_Task, _Parser):
 
 class Report(_Report, _Parser):
     _num_splits = 7
+
+
+class ReportRow(_ReportRow):
+    @classmethod
+    def from_all(cls, (report, task)):
+        return cls(*((task.uuid,) + report))
 
 
 def omp(args):
@@ -71,4 +80,4 @@ def get_reports_for(task):
 def get_all_reports():
     for task in get_tasks():
         for report in get_reports_for(task):
-            yield report, task
+            yield ReportRow.from_all((report, task))

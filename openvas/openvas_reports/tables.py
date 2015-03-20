@@ -1,19 +1,4 @@
-import collections
-
 from horizon import tables
-
-from openvas import omp
-
-
-_ReportRow = collections.namedtuple('ReportRow', ['task_uuid', 'report_uuid',
-                                                  'report_status', 'high',
-                                                  'med', 'low', 'log', 'date'])
-
-
-class ReportRow(_ReportRow):
-    @classmethod
-    def from_all(cls, (task, report)):
-        return cls((task.uuid,) + report)
 
 
 class ReportsTable(tables.DataTable):
@@ -30,17 +15,10 @@ class ReportsTable(tables.DataTable):
     date = tables.Column('date', verbose_name='Date', sortable=True)
 
     class Meta:
-        name = 'template'
+        name = 'reports'
         multi_select = False
         row_class = tables.Row
         verbose_name = 'Reports'
 
-    def get_data(self, *args, **kwargs):
-        return list(omp.get_all_reports())
-
-    def get_rows(self):
-        data = self.get_data()
-        return [
-            self._meta.row_class(self, ReportRow.from_all(datum))
-            for datum in data
-        ]
+    def get_object_id(self, datum):
+        return datum.report_uuid

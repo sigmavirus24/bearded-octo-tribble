@@ -1,4 +1,4 @@
-# Copyright 2013, Rackspace US, Inc.
+# Copyright 2015, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,15 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from django.core import urlresolvers
 from django.views.generic.base import View
 from django.http import HttpResponse, HttpResponseBadRequest
 import horizon.tables
 
+from openvas import omp
 from openvas.openvas_reports import tables
 
 
 class IndexView(horizon.tables.DataTableView):
     table_class = tables.ReportsTable
     template_name = 'openvas/openvas/index.html'
+
+    def get_data(self):
+        return list(omp.get_all_reports())
