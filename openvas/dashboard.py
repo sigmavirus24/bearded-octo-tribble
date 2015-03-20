@@ -18,13 +18,13 @@ import horizon
 class OpenVasPanelGroup(horizon.PanelGroup):
     slug = 'openvas'
     name = 'OpenVAS Reports'
-    panels = ('openvas',)
+    panels = ('openvas-reports',)
 
 
 class OpenVasDashboard(horizon.Dashboard):
     name = 'OpenVAS Dashboard'
     slug = 'openvas'
     panels = (OpenVasPanelGroup,)
-    default_panel = 'openvas'
+    default_panel = 'openvas-reports'
 
 horizon.register(OpenVasDashboard)
