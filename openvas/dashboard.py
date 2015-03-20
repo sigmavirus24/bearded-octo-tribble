@@ -25,5 +25,6 @@ class OpenVasDashboard(horizon.Dashboard):
     name = 'OpenVAS Dashboard'
     slug = 'openvas'
     panels = (OpenVasPanelGroup,)
+    default_panel = 'openvas'
 
 horizon.register(OpenVasDashboard)
