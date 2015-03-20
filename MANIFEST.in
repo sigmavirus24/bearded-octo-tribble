@@ -1,4 +1,4 @@
 include LICENSE
 include README.rst
-recursive-include rackspace/static *
-recursive-include rackspace/templates *
+recursive-include openvas/static *
+recursive-include openvas/templates *
