@@ -1,4 +1,12 @@
+from django.core import urlresolvers
 from horizon import tables
+
+
+def text_link(datum):
+    return urlresolvers.reverse(
+        'horizon:openvas:openvas_reports:text_report',
+        args=[datum.report_uuid]
+    )
 
 
 class ReportsTable(tables.DataTable):
@@ -13,6 +21,8 @@ class ReportsTable(tables.DataTable):
     low = tables.Column('low', verbose_name='Low Severity', sortable=False)
     log = tables.Column('log', verbose_name='Log Severity', sortable=False)
     date = tables.Column('date', verbose_name='Date', sortable=True)
+    text_report = tables.Column('text', verbose_name='Text Report',
+                                link=text_link, sortable=False)
 
     class Meta:
         name = 'reports'

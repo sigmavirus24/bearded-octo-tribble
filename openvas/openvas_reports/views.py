@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from django.core import urlresolvers
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseBadRequest
 import horizon.tables
 
@@ -26,3 +26,15 @@ class IndexView(horizon.tables.DataTableView):
 
     def get_data(self):
         return list(omp.get_all_reports())
+
+
+class TextReportView(TemplateView):
+    template_name = 'openvas/openvas/text_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TextReportView, self).get_context_data(**kwargs)
+        report_id = kwargs['report_id']
+        txt_uuid = omp.get_report_formats()['txt']
+        output = omp.omp(['-R', report_id, '-f', txt_uuid]).stdout.read()
+        context['report_data'] = output
+        return context

@@ -7,10 +7,11 @@ import xml.etree.ElementTree as ET
 _Report = collections.namedtuple('Report',
                                  ['uuid', 'status', 'high', 'med', 'low',
                                   'log', 'date'])
-_Task = collections.namedtuple('Task', ['uuid', 'status', 'type'])
+_Task = collections.namedtuple('Task', ['uuid', 'status', 'name'])
 _ReportRow = collections.namedtuple('ReportRow', ['task_uuid', 'report_uuid',
                                                   'report_status', 'high',
-                                                  'med', 'low', 'log', 'date'])
+                                                  'med', 'low', 'log', 'date',
+                                                  'text'])
 
 
 class _Parser(object):
@@ -33,7 +34,8 @@ class Report(_Report, _Parser):
 class ReportRow(_ReportRow):
     @classmethod
     def from_all(cls, (report, task)):
-        return cls(*((task.uuid,) + report))
+        row = (task.name,) + report + ('Text Report',)
+        return cls(*row)
 
 
 def omp(args):
@@ -52,6 +54,16 @@ def create_target(name, hosts):
     p = send_xml(xml)
     x = ET.XML(p.stdout.read())
     return x.attrib
+
+
+def get_report_formats():
+    output = omp(['--get-report-formats']).stdout.read()
+    re = _Parser._re
+    formats = {}
+    for line in output.splitlines():
+        (uuid, format) = re.split(line, 1)
+        formats[format.lower()] = uuid
+    return formats
 
 
 def get_targets():
