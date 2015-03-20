@@ -18,13 +18,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 import horizon.tables
 
 from openvas.openvas_reports import tables
-from openvas import omp
 
 
 class IndexView(horizon.tables.DataTableView):
     table_class = tables.ReportsTable
     template_name = 'openvas/openvas/index.html'
-
-    def get_tables(self):
-        return dict(('Reports', self.table_class(self.request, t))
-                    for t in omp.get_all_reports())
