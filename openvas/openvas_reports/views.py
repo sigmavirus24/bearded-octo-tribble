@@ -11,9 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from django.core import urlresolvers
-from django.views.generic.base import TemplateView
-from django.http import HttpResponse, HttpResponseBadRequest
+import io
+
+from django.core.servers.basehttp import FileWrapper
+from django.views.generic.base import View, TemplateView
+from django.http import StreamingHttpResponse
 import horizon.tables
 
 from openvas import omp
@@ -34,7 +36,23 @@ class TextReportView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TextReportView, self).get_context_data(**kwargs)
         report_id = kwargs['report_id']
-        txt_uuid = omp.get_report_formats()['txt']
+        txt_uuid = omp.get_report_format('txt')
         output = omp.omp(['-R', report_id, '-f', txt_uuid]).stdout.read()
         context['report_data'] = output
         return context
+
+
+class PdfReportView(View):
+    def get(self, *args, **kwargs):
+        report_id = kwargs['report_id']
+        pdf_uuid = omp.get_report_format('pdf')
+        proc = omp.omp(['-R', report_id, '-f', pdf_uuid])
+        b = io.BytesIO(proc.stdout.read())
+        b.seek(0, 0)
+        resp = StreamingHttpResponse(FileWrapper(b),
+                                     mimetype='application/pdf')
+        resp['Content-Disposition'] = 'attachment; filename={0}.pdf'.format(
+            report_id
+        )
+        resp['Content-Length'] = len(b.getvalue())
+        return resp

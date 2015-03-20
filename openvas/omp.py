@@ -11,7 +11,7 @@ _Task = collections.namedtuple('Task', ['uuid', 'status', 'name'])
 _ReportRow = collections.namedtuple('ReportRow', ['task_uuid', 'report_uuid',
                                                   'report_status', 'high',
                                                   'med', 'low', 'log', 'date',
-                                                  'text'])
+                                                  'text', 'pdf'])
 
 
 class _Parser(object):
@@ -34,7 +34,7 @@ class Report(_Report, _Parser):
 class ReportRow(_ReportRow):
     @classmethod
     def from_all(cls, (report, task)):
-        row = (task.name,) + report + ('Text Report',)
+        row = (task.name,) + report + ('Text Report', 'PDF Report')
         return cls(*row)
 
 
@@ -64,6 +64,10 @@ def get_report_formats():
         (uuid, format) = re.split(line, 1)
         formats[format.lower()] = uuid
     return formats
+
+
+def get_report_format(fmt):
+    return get_report_formats()[fmt.lower()]
 
 
 def get_targets():

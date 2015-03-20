@@ -9,6 +9,13 @@ def text_link(datum):
     )
 
 
+def pdf_link(datum):
+    return urlresolvers.reverse(
+        'horizon:openvas:openvas_reports:pdf_report',
+        args=[datum.report_uuid]
+    )
+
+
 class ReportsTable(tables.DataTable):
     task_uuid = tables.Column('task_uuid', verbose_name='Task UUID',
                               sortable=True)
@@ -23,6 +30,8 @@ class ReportsTable(tables.DataTable):
     date = tables.Column('date', verbose_name='Date', sortable=True)
     text_report = tables.Column('text', verbose_name='Text Report',
                                 link=text_link, sortable=False)
+    pdf_report = tables.Column('pdf', verbose_name='Pdf Report',
+                               link=pdf_link, sortable=False)
 
     class Meta:
         name = 'reports'
