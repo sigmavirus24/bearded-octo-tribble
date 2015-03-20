@@ -33,7 +33,5 @@ class ReportsTable(tables.DataTable):
         return list(omp.get_all_reports())
 
     def get_rows(self):
-        return [self._meta.row_class(self, self.data.short_description)]
-
-    def get_object_id(self, datum):
-        return self.data.title
+        data = self.get_data()
+        return [self._meta.row_class(self, datum) for datum in data]
