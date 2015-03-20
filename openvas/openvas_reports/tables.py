@@ -41,6 +41,6 @@ class ReportsTable(tables.DataTable):
     def get_rows(self):
         data = self.get_data()
         return [
-            self._meta.row_class(self, ReportRow(datum))
+            self._meta.row_class(self, ReportRow.from_all(datum))
             for datum in data
         ]
