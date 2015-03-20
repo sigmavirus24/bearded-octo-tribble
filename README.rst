@@ -1,11 +1,12 @@
-Horizon Extensions for RPC
-##########################
-:date: 2013-09-26 09:51
+Horizon OpenVAS Extension for RPC
+#################################
+
+:date: 2015-03-19 09:51
 :tags: Rackspace, RPC, Horizon
 :category: \*nix
 
 
-Rackspace Private Cloud, installable extensions for Horizon.
+Rackspace Private Cloud, installable OpenVAS extension for Horizon.
 
 
 License
