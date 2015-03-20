@@ -8,7 +8,7 @@ _Report = collections.namedtuple('Report',
                                  ['uuid', 'status', 'high', 'med', 'low',
                                   'log', 'date'])
 _Task = collections.namedtuple('Task', ['uuid', 'status', 'name'])
-_ReportRow = collections.namedtuple('ReportRow', ['task_uuid', 'report_uuid',
+_ReportRow = collections.namedtuple('ReportRow', ['task_name', 'report_uuid',
                                                   'report_status', 'high',
                                                   'med', 'low', 'log', 'date',
                                                   'text', 'pdf'])
